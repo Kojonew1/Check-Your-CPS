@@ -4,6 +4,6 @@ Languages used: HTML, CSS, JavaScript <p>
 Time spent: 2h <p>
 Features: <p>
   Working JavaScript <p>
-  Working transmission from first page to second page
-
+  Working transmission from first page to second page <p>
+<br>
 Thanks for viewing my project I would thankfull for your vote!
