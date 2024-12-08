@@ -1,0 +1,137 @@
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Check Your CPS</title>
+    <style>
+        body {
+            background-color: rgba(0, 0, 0, 0.4);
+            font-family: Consolas;
+            text-align: center;
+            padding: 10px;
+            margin: 0;
+        }
+
+        #startbutton, #clickbutton, #restartbutton {
+            width: 400px;
+            height: 200px;
+            color: whitesmoke;
+            background-color: rgba(0, 0, 0, 0.432);
+            border-radius: 50px;
+            margin: 20px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        #clickbutton, #restartbutton {
+            display: none; 
+        }
+
+        #timer {
+            font-size: 30px;
+            margin-top: 20px;
+        }
+
+        #cpsdisplay {
+            font-size: 40px;
+            color: whitesmoke;
+            margin-top: 30px;
+        }
+        #minibutton {
+            width: 75px;
+            height: 50px;
+            background-color: rgba(0, 0, 0, 0.432);
+            color: whitesmoke;
+            border-radius: 10px;
+        }
+        #startbutton:hover, #clickbutton:hover, #restartbutton:hover, #minibutton:hover {
+            border: 5px solid black;
+            transition: border 0.3s ease;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="outer-rectangle">
+        <h1>Check Your CPS</h1>
+        <button id="startbutton">Start</button>
+        <button id="clickbutton">Click Here</button>
+        <button id="restartbutton">Restart</button>
+        <div id="timer">Time: 10</div>
+        <div id="cpsdisplay">CPS: 0</div>
+    </div>
+    <button id="minibutton">30 Seconds</button>
+
+    <script>
+        let clicks = 0;
+        let timer = 10;
+        let interval;
+        let timerInterval;
+
+        const startButton = document.getElementById('startbutton');
+        const clickButton = document.getElementById('clickbutton');
+        const restartButton = document.getElementById('restartbutton');
+        const cpsDisplay = document.getElementById('cpsdisplay');
+        const timerDisplay = document.getElementById('timer');
+
+        function startGame() {
+            clicks = 0;
+            timer = 10;
+            cpsDisplay.innerHTML = "CPS: 0";
+            timerDisplay.innerHTML = "Time: " + timer;
+
+            clickButton.disabled = false;
+            clickButton.innerHTML = "Click Here";
+            restartButton.style.display = "none";
+
+            timerInterval = setInterval(() => {
+                timer--;
+                timerDisplay.innerHTML = "Time: " + timer;
+                if (timer <= 0) {
+                    clearInterval(timerInterval);
+                    clearInterval(interval);
+                    showCPS();
+                }
+            }, 1000);
+
+            interval = setInterval(() => {
+                cpsDisplay.innerHTML = "CPS: " + (clicks / (10 - timer)).toFixed(2);
+            }, 100);
+        }
+
+        function showCPS() {
+            cpsDisplay.innerHTML = "Your CPS is: " + (clicks / 10).toFixed(2);
+            clickButton.disabled = true;
+            clickButton.innerHTML = "Game Over!";
+            restartButton.style.display = "inline-block";
+        }
+
+        startButton.addEventListener('click', () => {
+            startButton.style.display = "none";
+            clickButton.style.display = "inline-block";
+            startGame();
+        });
+
+        clickButton.addEventListener('click', () => {
+            if (timer > 0) {
+                clicks++;
+            } else {
+                alert('Game over! Your CPS is: ' + (clicks / 10).toFixed(2));
+            }
+        });
+
+        restartButton.addEventListener('click', () => {
+            clearInterval(timerInterval);
+            clearInterval(interval);
+            restartButton.style.display = "none";
+            startButton.style.display = "inline-block";
+            clickButton.style.display = "none";
+        });
+
+        const button = document.getElementById("minibutton")
+
+        button.addEventListener("click", () => {
+            window.location.href="subpage.html";
+        });
+    </script>
+</body>
+</html>
